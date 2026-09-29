@@ -1,0 +1,177 @@
+Hostle expense tracker
+
+# Starting point : here student need to enter the monthly budget
+budget = float(input("Enter your monthly budget/pocket money: ₹"))
+
+# To store data category wise
+food = 0
+travel = 0
+shopping = 0
+study = 0
+other = 0
+
+# this will store the individual expense
+expenses = []
+
+# This function will add up the complete expense
+def add_expense():
+    print("\n--- Add New Expense ---")
+    
+    date = input("Enter date (DD/MM): ")
+    
+    print("\nChoose category:")
+    print("1. Food")
+    print("2. Travel")
+    print("3. Shopping")
+    print("4. Study")
+    print("5. Other")
+
+    category = input("Enter category number: ")
+
+    amount = float(input("Enter amount: ₹"))
+    description = input("What did you spend it on? ")
+
+    # Add expense to our list
+    expenses.append([date, category, amount, description])
+
+    print("Expense added successfully! ✅")
+
+#this functuion will store the total expense
+
+def total_expense():
+    total = 0
+
+    # analyse all the expense and provide final value
+    for expense in expenses:
+        total = total + expense[2]
+
+    return total
+
+#function to show the summary of the expense
+
+def show_summary():
+
+    total = total_expense()
+
+    print("\n================================")
+    print("       HOSTEL EXPENSE SUMMARY")
+    print("================================")
+
+    print("Monthly Budget : ₹", budget)
+    print("Total Spent    : ₹", total)
+    print("Money Left     : ₹", budget - total)
+
+    print("\nCategory-wise spending:")
+
+    # Calculate category totals
+    food_total = 0
+    travel_total = 0
+    shopping_total = 0
+    study_total = 0
+    other_total = 0
+
+    for expense in expenses:
+
+        category = expense[1]
+        amount = expense[2]
+
+        if category == "1":
+            food_total = food_total + amount
+
+        elif category == "2":
+            travel_total = travel_total + amount
+
+        elif category == "3":
+            shopping_total = shopping_total + amount
+
+        elif category == "4":
+            study_total = study_total + amount
+
+        elif category == "5":
+            other_total = other_total + amount
+
+    print("Food     : ₹", food_total)
+    print("Travel   : ₹", travel_total)
+    print("Shopping : ₹", shopping_total)
+    print("Study    : ₹", study_total)
+    print("Other    : ₹", other_total)
+
+    # Savings = money that has not been spent
+    savings = budget - total
+
+    print("\nYour Savings : ₹", savings)
+
+    # Warning if student has spent more than 80%
+    if total >= budget * 0.8:
+        print("\n⚠️ WARNING: You have used more than 80% of your budget!")
+
+    if total > budget:
+        print("🚨 You have exceeded your monthly budget!")
+
+# to show the total expence history
+
+def show_expenses():
+
+    print("\n================================")
+    print("          EXPENSE HISTORY")
+    print("================================")
+
+    if len(expenses) == 0:
+        print("No expenses recorded yet.")
+        return
+
+    for expense in expenses:
+
+        date = expense[0]
+        category = expense[1]
+        amount = expense[2]
+        description = expense[3]
+
+        # Convert category number into a name
+        if category == "1":
+            category_name = "Food"
+        elif category == "2":
+            category_name = "Travel"
+        elif category == "3":
+            category_name = "Shopping"
+        elif category == "4":
+            category_name = "Study"
+        else:
+            category_name = "Other"
+
+        print("\nDate :", date)
+        print("Category :", category_name)
+        print("Amount : ₹", amount)
+        print("Description :", description)
+
+
+
+
+while True:
+
+    print("\n\n================================")
+    print("       HOSTEL EXPENSE MANAGER")
+    print("================================")
+
+    print("1. Add Expense")
+    print("2. View Summary")
+    print("3. View Expense History")
+    print("4. Exit")
+
+    choice = input("\nEnter your choice: ")
+
+    if choice == "1":
+        add_expense()
+
+    elif choice == "2":
+        show_summary()
+
+    elif choice == "3":
+        show_expenses()
+
+    elif choice == "4":
+        print("\nThank you for using Hostel Expense Manager! 👋")
+        break
+
+    else:
+        print("\n❌ Invalid choice. Please try again.")
